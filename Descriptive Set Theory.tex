@@ -1,0 +1,1808 @@
+% Standalone sequel to Effective Domains, Oracles, and Forcing in the Effective Topos.
+% Compile twice with pdfLaTeX. No external .bib, .aux, or figure files are required.
+% References to Paper I use named results; its original source labels are recorded
+% in Appendix A so that the sequel does not depend on an unstable theorem numbering.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[margin=29mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{microtype}
+\usepackage{enumitem,booktabs,array,longtable}
+\usepackage{tikz-cd}
+\usepackage[colorlinks=true,linkcolor=blue!45!black,citecolor=blue!45!black,urlcolor=blue!45!black]{hyperref}
+\usepackage{aliascnt}
+\usepackage[nameinlink,noabbrev,capitalise]{cleveref}
+\hypersetup{pdftitle={Effective Observation Hierarchies},pdfauthor={Conor Sheridan}}
+\setlist{itemsep=2pt,topsep=5pt}
+\setlength{\emergencystretch}{2em}
+\numberwithin{equation}{section}
+\newtheorem{theorem}{Theorem}[section]
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\theoremstyle{definition}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}[definition]{Definition}
+\aliascntresetthe{definition}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\newaliascnt{example}{theorem}
+\newtheorem{example}[example]{Example}
+\aliascntresetthe{example}
+\crefname{example}{Example}{Examples}
+\Crefname{example}{Example}{Examples}
+\newaliascnt{problem}{theorem}
+\newtheorem{problem}[problem]{Problem}
+\aliascntresetthe{problem}
+\crefname{problem}{Problem}{Problems}
+\Crefname{problem}{Problem}{Problems}
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
+\theoremstyle{plain}
+\newtheorem{maintheorem}{Theorem}
+\renewcommand{\themaintheorem}{\Alph{maintheorem}}
+\crefname{maintheorem}{Theorem}{Theorems}
+\Crefname{maintheorem}{Theorem}{Theorems}
+\newcommand{\E}{\mathbf{Eff}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\TV}{\mathbb T}
+\newcommand{\Pow}{\mathcal P}
+\newcommand{\OO}{\mathcal O}
+\newcommand{\Pt}{\operatorname{Pt}_{\Sigma}}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\ev}{\operatorname{ev}}
+\newcommand{\Sub}{\operatorname{Sub}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\Adm}{\operatorname{Adm}}
+\newcommand{\Par}{\operatorname{Par}}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\onto}{\twoheadrightarrow}
+\newcommand{\incl}{\hookrightarrow}
+\newcommand{\pmap}{\rightharpoonup}
+\newcommand{\Cw}{\mathsf C_{\omega}}
+\newcommand{\Mark}{\mathbf{Mark}_{\mathrm{mod}}}
+\newcommand{\JoinMark}{\mathbf{Mark}_{\omega}}
+\newcommand{\SSn}{\mathcal S}
+\newcommand{\PPn}{\mathcal P}
+\newcommand{\DDn}{\mathcal D}
+\newcommand{\negT}{\neg_{\TV}}
+\newcommand{\joinT}{\bigvee^{\TV}}
+\newcommand{\meetT}{\bigwedge^{\TV}}
+\newcommand{\jsem}{j^{\mathrm{sem}}}
+\newcommand{\ObsCat}{\mathbf{Obs}_{\Sigma}}
+\newcommand{\Profile}{\operatorname{Prof}}
+\newcommand{\Tot}{\operatorname{Tot}}
+\newcommand{\Icite}[1]{\cite[\textnormal{#1}]{sheridan}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\setcounter{tocdepth}{1}
+\title{\textcolor{red}{UNDER CONSTRUCTION} Effective Observation Hierarchies\\[4pt]\large A Synthetic Approach to Descriptive Set Theory}
+\author{Conor Sheridan}
+\date{November 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We develop a finite descriptive hierarchy from the positive observation
+classifier and observation duality of the effective topos. Interpreted
+presentations first give a regular-cover descent theorem for predicates.
+Countable join then defines a reflection on modest markings of the stable
+truth object. Alternating this reflection with complement constructs
+positive and negative observation levels, their predicate objects, and
+their numerical quantifier operations. Characters of the inherited
+positive observation algebras, interpreted in stable truth, reconstruct
+the corresponding graded effective-point objects. The first level is the
+effective-point construction of the preceding paper. We prove functoriality,
+semantic product reconstruction, and exact admissibility formulas for
+products and partial substitution. Termination and totality give intrinsic
+separation examples. A subsequent comparison with the inherited numerical
+presentation identifies the levels on the natural numbers with the finite
+arithmetical hierarchy and proves strictness at every finite level.
+The construction uses images, exponentials, adjunctions, and spectra;
+numerical universality enters only the comparison and diagonal argument.
+We distinguish the resulting graded reconstruction from the additional
+endofunctor comparisons required to identify it with a standard limit jump.
+\end{abstract}
+
+\tableofcontents
+
+\section{From positive observations to descriptive hierarchies}
+\label{sec:introduction}
+
+The preceding paper \cite{sheridan}, hereafter Paper~I, constructs semantic
+domains and their effective points from a positive observation classifier
+$i:\Sigma\incl\Omega$ in $\E$. Its two-spectrum theorem recovers both a
+searchable semantic domain and its effective points from one positive
+observation algebra. The present paper develops the observation side of
+that construction beyond positivity. An observation may fail to be
+positive while still admitting a structured presentation obtained from
+positive observations by complement and countable operations. We construct
+the objects which classify these observations and then reconstruct the
+points that they admit.
+
+The separation between semantic truth and effective observation remains
+essential. The ordinary Boolean object $2$ classifies actual decisions in
+$\E$. Paper~I proves that the computation object $P$ has no nonconstant
+map to $2$. A descriptive construction must therefore distinguish a new
+way of observing a Boolean value from an ordinary Boolean decision. We
+make that distinction by interpreting observation algebras in the stable
+truth object $\TV=\Omega_{\neg\neg}$ and retaining, at each level, a
+specified modest marking of $\TV$.
+
+Synthetic descriptive set theory studies descriptive classes through
+modified observation objects and categorical operations. Pauly and
+de~Brecht develop this perspective for represented spaces, including the
+role of admissibility in recovering maps from inverse images of
+observations \cite{paulydebrecht}. Our starting data are instead the
+observation algebras and effective-point comparison already constructed in
+Paper~I. We use the represented-space theory as a comparison, after the
+internal construction has been made.
+
+\begin{maintheorem}[Completion and the finite hierarchy]
+\label{main:hierarchy}
+The positive classifier embeds in $\TV$. On modest subobjects of $\TV$,
+countable join defines a reflection into the countably join-closed
+markings. Starting at $A_1=\Sigma$, complement and this reflection give
+markings $A_n,B_n\incl\TV$, $n\geq1$, with
+\[
+ B_n=\negT(A_n),\qquad A_{n+1}=\Cw(B_n),\qquad
+ A_n\incl A_{n+1},\quad B_n\incl A_{n+1}.
+\]
+For each fixed finite level, the associated predicate objects are natural
+under substitution. The positive levels have finite meets and countable
+joins; the negative levels have finite joins and countable meets.
+The markings themselves form a single family indexed by the natural
+numbers object.
+\end{maintheorem}
+
+\begin{maintheorem}[Graded reconstruction]
+\label{main:spectra}
+For a searchable domain $D$ with positive observation algebra $\Gamma_D$,
+there are objects
+\[
+ \overline D=\Spec_{\TV}(\Gamma_D),\qquad
+ D^{[n]}=\overline D\times_{\TV^{\Gamma_D}}A_n^{\Gamma_D}.
+\]
+The object $D^{[n]}$ represents level-$n$ observation profiles whose
+interpretations are characters. The first level is canonically $\Pt D$.
+These constructions are functorial for the effective Scott maps of
+Paper~I, and the level inclusions are natural. Semantic spectra preserve
+binary products. The corresponding graded product comparison is a mono
+whose domain is described by an explicit universal admissibility formula.
+Semantic maps likewise have maximal graded restrictions, with an exact
+formula for their sequential domains.
+\end{maintheorem}
+
+\begin{maintheorem}[Separation and numerical comparison]
+\label{main:separation}
+Termination has a complementary level-$2$ observation, and it defines a
+map $P\to2^{[2]}$ which does not factor through $2^{[1]}\cong2$.
+Totality is classified at the second negative level and is not positive.
+On $\N$, the supports of level-$n$ predicates are exactly the usual
+$\Sigma^0_n$ and $\Pi^0_n$ numerical predicates. There is a universal
+numerical predicate for each positive level, and its complemented diagonal
+proves strictness of the positive hierarchy at every finite level.
+\end{maintheorem}
+
+The proofs of the first two theorems precede the numerical comparison.
+The latter uses the program cover already derived in Paper~I; it is not
+used to define the hierarchy or its spectra. The exact product and
+substitution results also specify the remaining comparison problem: a
+graded reconstruction is not yet an endofunctor on a category closed under
+that reconstruction. We retain that distinction in \cref{sec:comparison}.
+
+\section{Inherited structure and stable truth}
+\label{sec:truth}
+
+\subsection{The ground model and imported results}
+\label{subsec:imports}
+
+We work throughout in the fixed effective topos of Paper~I, with the
+realizability interpretation of \cite{hyland,vanoosten}. Its natural
+numbers object is $\N$, its positive classifier is $i:\Sigma\incl\Omega$,
+and its ordinary Boolean object is $2=1+1$. Images are regular images.
+Predicates and existential elimination therefore have their exact-category
+meaning; an image factorization does not choose a section of its cover.
+
+We use the finite-hit cover $e:2^{\N}\onto\Sigma$, numerical
+$\Sigma$-overtness, and the finite positive operations from
+\Icite{Finite-hit classification and Relative foundation}. We also use
+\Icite{Function names and subobjects, Modest-target lifting, and Finite-hit
+name presentations}: $\Sigma$ is modest, modest objects are closed under
+finite products, exponentials between modest objects, and subobjects,
+and a map from a partitioned assembly lifts through a regular epimorphism
+whose domain is modest. This last lifting theorem uses unique denotation
+of a supplied name and does not use a selection of arbitrary fibres.
+
+The searchable presentations, positive trace algebras, and observation
+duality are those of \Icite{Searchable approximation presentations and
+Two-spectrum reconstruction}. The intrinsic computation object is denoted
+by $P$, and $H:P\times\N\to\Sigma$ is its termination observation.
+We use \Icite{Intrinsic Rice and halting, Intrinsic finite information,
+and the nonpositivity corollary} for the separation examples.
+\Cref{app:imports} records the original source labels of these results.
+
+We reserve $\TV$ for stable truth, leaving the notation for Baire space
+in Paper~I available for later comparisons. A base carrier of a searchable
+presentation is written $B$ or $C$; it is not the stable truth object.
+
+\subsection{The Boolean algebra of stable truth}
+
+\begin{definition}[Semantic truth]
+\label{def:semantic-truth}
+Let $j=\neg\neg:\Omega\to\Omega$. Write
+\[
+ \TV=\{p:\Omega\mid j(p)=p\},\qquad k:\TV\incl\Omega.
+\]
+For a family $p:A\to\TV$, define
+\begin{equation}\label{eq:stable-operations}
+ \negT p=\neg p,\qquad
+ \meetT_{a:A}p(a)=\forall a:A\;p(a),\qquad
+ \joinT_{a:A}p(a)=j\bigl(\exists a:A\;p(a)\bigr).
+\end{equation}
+\end{definition}
+
+\begin{lemma}[Stable truth operations]
+\label{lem:stable-boolean}
+The operations in \eqref{eq:stable-operations} make $\TV$ an internally
+complete Boolean algebra. Finite meets distribute over its indexed joins.
+Its indexed operations satisfy substitution and Fubini equations.
+The map $k$ preserves meets, but its joins are the $j$-closures of ambient
+joins.
+\end{lemma}
+\begin{proof}
+A universal quantification of stable predicates is stable: from
+$\neg\neg\forall a\,p(a)$ one obtains $\neg\neg p(a)$ for each $a$, hence
+$p(a)$. Negations and double negations are stable. The displayed meet is
+the greatest stable lower bound; the displayed join is the least stable
+upper bound, since $\exists a\,p(a)\leq q=j(q)$ implies
+$j(\exists a\,p(a))\leq q$. Complement satisfies
+$p\wedge\neg p=\bot$ and $j(p\vee\neg p)=\top$, and is involutive on
+stable truth. The nucleus $j$ preserves finite meets. Therefore, for stable
+$q$, $q\wedge j(r)=j(q\wedge r)$, which proves distributivity over
+indexed joins. Substitution follows from the corresponding subobject
+quantifiers, and interchange of existential quantifiers followed by
+idempotence of $j$ proves the join Fubini equation. The meet equation is
+the interchange of universal quantifiers.
+\end{proof}
+
+This Boolean algebra lives in the constructive topos $\E$. Its equation
+$p\vee^{\TV}\negT p=\top$ does not assert the ambient proposition
+$p\vee\neg p$. This distinction will account for the changed Boolean
+target in \cref{sec:examples}.
+
+\begin{proposition}[Positive truth is stable]
+\label{prop:positive-stability}
+There is a unique mono $\alpha:\Sigma\incl\TV$ with $k\alpha=i$.
+It preserves finite meets and all the overt joins defined in $\Sigma$.
+\end{proposition}
+\begin{proof}
+An assembly is separated for double negation; equivalently its equality
+predicate is stable. This can be seen directly in the assembly
+presentation: in a context carrying names of $x$ and $y$, nonempty
+double-negated equality forces equality of their underlying elements,
+and the supplied name of $x$ then realizes their assembly equality.
+This is uniform in the given context. The categorical characterization
+is recalled in \cite[Section~3.2]{hylandvariations}.
+
+The object $\Sigma$ is modest and hence an assembly. For $p:\Sigma$,
+$i(p)$ is equivalent to $p=\top_\Sigma$. Thus $i(p)$ is stable, giving
+the factorization, and monicity of $i$ makes $\alpha$ monic. For a
+$\Sigma$-overt $A$ and $u:A\to\Sigma$, the ordinary existential
+$\exists a\,i(u(a))$ already has its $\Sigma$-classifier
+$\bigvee_A^\Sigma u$. It is stable by the first part. Taking its
+$j$-closure changes nothing, proving preservation of that join.
+Finite meets are preserved by both inclusions.
+\end{proof}
+
+The interpretation is the commuting triangle
+\begin{equation}\label{diag:truth-factorization}
+\begin{tikzcd}[column sep=large]
+ \Sigma\ar[r,hook,"\alpha"]\ar[dr,hook,"i"']&
+ \TV\ar[d,hook,"k"]\\
+ &\Omega.
+\end{tikzcd}
+\end{equation}
+Equalities between positive operations can consequently be checked in
+$\TV$ and reflected through $\alpha$.
+
+\section{Interpreted presentations and regular descent}
+\label{sec:descent}
+
+\begin{definition}[Markings and presentations]
+\label{def:interpreted-presentation}
+A \emph{marking} of an object $H$ is a mono $m:M\incl H$.
+An \emph{interpreted presentation} of this marking is a factorization
+$\tau=mq:T\onto M\incl H$ with $q$ regular epic.
+A predicate $p:X\to H$ is $M$-classified when it factors through $m$.
+An actual presentation of $p$ is a map $t:X\to T$ with $\tau t=p$.
+\end{definition}
+
+\begin{theorem}[Descent of presented predicates]
+\label{thm:predicate-descent}
+For an interpreted presentation as above and $p:X\to H$, the following
+are equivalent:
+\begin{enumerate}
+ \item $p$ is $M$-classified;
+ \item there are a regular epi $r:Y\onto X$ and a map $t:Y\to T$
+       such that $pr=\tau t$.
+\end{enumerate}
+The equivalence holds in arbitrary parameter contexts and is stable under
+pullback. The $M$-classified predicates form the least class containing
+the actually presented predicates and closed under descent along regular
+covers of their domains.
+\end{theorem}
+\begin{proof}
+For a factorization $p=m\bar p$, use the canonical pullback
+\begin{equation}\label{diag:presentation-cover}
+\begin{tikzcd}[column sep=large]
+ Y=X\times_M T\ar[r,"t"]\ar[d,two heads,"r"']&
+ T\ar[d,two heads,"q"]\\
+ X\ar[r,"\bar p"']&M\ar[r,hook,"m"']&H.
+\end{tikzcd}
+\end{equation}
+Regular epimorphisms are stable under pullback, so $r$ has the required
+property. Conversely let $U=X\times_H M\incl X$. The equality
+$pr=\tau t$ makes $r$ factor through $U$. Its image is all of $X$,
+so the mono $U\incl X$ is an isomorphism. This gives the unique
+factorization through $M$.
+
+Replace $X$ by $Z\times X$ to retain a parameter $Z$. Both directions
+use pullbacks and stable images, so reindexing in $Z$ preserves them.
+Every $M$-classified predicate is locally presented by the displayed
+cover. The $M$-classified predicates themselves descend, by the converse
+argument. These two observations prove the leastness assertion.
+\end{proof}
+
+\begin{proposition}[Presentation objects and predicate objects]
+\label{prop:presentation-comparison}
+There is a canonical mono
+\begin{equation}\label{eq:presentation-comparison}
+ \im(\tau^X)\incl M^X\incl H^X.
+\end{equation}
+The first mono is an isomorphism precisely when $q^X$ is regular epic.
+Membership in its left-hand side is local lifting of a whole family of
+predicates over its parameter object. Membership in $M^X$ permits the
+domain-cover descent of \cref{thm:predicate-descent}.
+\end{proposition}
+\begin{proof}
+Exponentiation preserves the mono $m$, and $\tau^X=m^Xq^X$.
+Its image is therefore $m^X\im(q^X)$, giving the mono and the stated
+criterion. For a parameter $Z\to H^X$, the image criterion for
+$\tau^X$ asks for a regular cover of $Z$ on which the arrow lifts to
+$T^X$. In contrast, factoring its transpose $Z\times X\to H$ through
+$M$ is equivalent to lifting after a regular cover of $Z\times X$.
+These are the two asserted local conditions.
+\end{proof}
+
+\begin{corollary}[Descent completion]
+\label{cor:descent-completion}
+The marking $M\incl H$ depends only on the image of the interpretation
+$\tau$. Replacing $T$ by any other regular presentation of the same
+image leaves all completed predicate objects $M^X$ and their substitution
+maps canonically unchanged.
+\end{corollary}
+\begin{proof}
+Images are unique up to the unique isomorphism over $H$. Exponentiation
+and precomposition transport that isomorphism and preserve its uniqueness.
+\end{proof}
+
+\section{Countable-join completion}
+\label{sec:completion}
+
+\subsection{The covers used by countable operations}
+
+\begin{lemma}[Modest images in assemblies]
+\label{lem:modest-image}
+The regular image of a map from a modest object to an assembly is modest.
+In particular, the image of a modest object in $\TV$ is modest.
+\end{lemma}
+\begin{proof}
+Write the map as a tracked map of assemblies $f:D\to S$. On the
+set-theoretic image of $f$, declare a name $a$ to realize $y$ when $a$
+realizes a $d\in D$ with $f(d)=y$. The relation is inhabited at every
+image value. Since $D$ is modest, one name determines at most one $d$,
+and hence at most one $y$. Thus this is a modest assembly $M$.
+The map $D\to M$ is tracked by the identity on names. A supplied
+$M$-name already supplies a name of a preimage, so the map is regular
+epic. The inclusion $M\to S$ is tracked by the tracker of $f$ and is
+monic. This is the regular-image factorization, also in $\E$ under the
+regular inclusion of assemblies. Finally $\TV$ is a double-negation
+sheaf, hence a separated object and an assembly. Concretely it is the
+codiscrete Boolean assembly under the standard identification of the
+double-negation sheaves of $\E$ with sets.
+\end{proof}
+
+\begin{lemma}[Countable lifting]
+\label{lem:countable-cover-lifting}
+If $q:T\onto M$ is a regular epi with $T$ modest, then
+$q^{\N}:T^{\N}\onto M^{\N}$ is regular epic.
+\end{lemma}
+\begin{proof}
+Given $z:Z\to M^{\N}$, take a canonical partitioned cover
+$R\onto Z$. The transpose of the induced map $R\to M^{\N}$ has
+partitioned domain $R\times\N$. Modest-target lifting from Paper~I
+gives $R\times\N\to T$ above it. Transposition gives a lift
+$R\to T^{\N}$. In particular, applying this construction to
+$Z=M^{\N}$ and $z=\id$ proves that the image of $q^{\N}$ is all
+of $M^{\N}$. No lifts were selected as a function of arbitrary elements
+of $Z$.
+\end{proof}
+
+\subsection{A reflection on marked truth}
+
+Let $\Mark(\TV)$ be the poset of modest subobjects of $\TV$, with
+inclusions over $\TV$ as arrows. It is an ordinary poset of subobjects;
+no assertion that it is a small internal category is needed below.
+Let $\JoinMark(\TV)$ be its full subposet of markings through which
+countable semantic join restricts.
+
+\begin{definition}[Countable completion]
+\label{def:countable-completion}
+For $m:M\incl\TV$ define $\Cw(M)$ by
+\begin{equation}\label{eq:countable-image}
+ M^{\N}\xrightarrow{q_M}\Cw(M)\xrightarrow{c_M}\TV,
+ \qquad c_Mq_M=\joinT_{\N}m^{\N},
+\end{equation}
+where $q_M$ is regular epic and $c_M$ monic.
+\end{definition}
+
+\begin{theorem}[Countable completion reflection]
+\label{thm:countable-completion-reflection}
+The construction $\Cw$ defines a left adjoint to
+$\JoinMark(\TV)\incl\Mark(\TV)$. Its unit is the inclusion obtained
+from constant sequences. Consequently it is monotone and idempotent,
+with all the comparison equations determined by the inclusions in $\TV$.
+\end{theorem}
+\begin{proof}
+The object $M^{\N}$ is modest, so \cref{lem:modest-image} makes
+$\Cw(M)$ modest. Constant sequences and inhabitation of $\N$ give
+$M\incl\Cw(M)$.
+
+To construct countable join on $\Cw(M)$, exponentiate $q_M$ by $\N$.
+The resulting map is epic by \cref{lem:countable-cover-lifting}. On its
+domain $(M^{\N})^{\N}\cong M^{\N\times\N}$, flatten a double sequence
+using the fixed numerical pairing isomorphism and apply $q_M$. Its
+interpretation is
+\[
+ \joinT_i\joinT_j m(u_{ij})=\joinT_{(i,j)}m(u_{ij}).
+\]
+Hence two inputs with the same image in $\Cw(M)^{\N}$ have the same
+output after $c_M$, and therefore the same output. Effectiveness of the
+kernel pair descends the map to $\Cw(M)^{\N}\to\Cw(M)$.
+Its interpretation is the desired join, and monicity gives uniqueness.
+
+If $M\incl L\incl\TV$ and $L$ is countably join-closed, then the
+interpretation $M^{\N}\to\TV$ factors through $L$. Its image
+$\Cw(M)$ therefore factors through $L$. Conversely
+$\Cw(M)\incl L$ implies $M\incl L$ by the unit. This is the
+adjunction. The universal property gives monotonicity and the inverse
+inclusions for $\Cw\Cw(M)=\Cw(M)$. All equations between its maps
+hold after the monomorphism into $\TV$, so hold before it.
+\end{proof}
+
+The universal factorization is displayed by
+\begin{equation}\label{diag:completion-universal}
+\begin{tikzcd}[column sep=large]
+ M^{\N}\ar[r,two heads,"q_M"]\ar[dr]&
+ \Cw(M)\ar[d,hook,dashed]\ar[dr,hook,"c_M"]&\\
+ &L\ar[r,hook]&\TV.
+\end{tikzcd}
+\end{equation}
+The dashed arrow is determined by the marking, not by a chosen
+normal-form function.
+
+\begin{lemma}[Finite meets through completion]
+\label{lem:completion-meets}
+If a modest marking $M$ contains $\bot,\top$ and is closed under finite
+meets in $\TV$, then $\Cw(M)$ has these properties and is closed under
+finite joins.
+\end{lemma}
+\begin{proof}
+Constants belong by the unit. Finite joins follow from countable join,
+using $\bot$ for unused entries. On two presented inputs, define their
+meet by the doubly indexed family $u_i\wedge v_j$ in $M$. Its
+interpretation is
+\[
+ \left(\joinT_i u_i\right)\wedge
+ \left(\joinT_j v_j\right)=\joinT_{i,j}(u_i\wedge v_j).
+\]
+The product of the presentation covers is epic. The displayed equality
+and monicity of $c_M$ descend the construction through its kernel pair.
+The nullary meet is the already included $\top$.
+\end{proof}
+
+\begin{remark}[Completion and descriptive successor]
+\label{rem:successor-not-reflection}
+The involution $\negT:\TV\to\TV$ induces an order automorphism of
+the poset of markings by taking direct images. The descriptive successor
+will be $M\mapsto\Cw(\negT M)$. Idempotence of $\Cw$ does not imply
+idempotence of this composite. In particular, completion under one
+operation and alternation of operations are different constructions.
+\end{remark}
+
+\section{The finite hierarchy and its predicate objects}
+\label{sec:hierarchy}
+
+\subsection{An indexed construction of the markings}
+
+\begin{definition}[Observation levels]
+\label{def:observation-hierarchy}
+Regard $\alpha:\Sigma\incl\TV$ as the marking $A_1$. For $n\geq1$
+define $B_n\incl\TV$ by transporting $A_n$ along $\negT$, and define
+$A_{n+1}$ as the image of countable join on $B_n$. Denote the markings
+by $a_n:A_n\incl\TV$ and $b_n:B_n\incl\TV$, and the successor cover
+by
+\begin{equation}\label{eq:successor-cover}
+ q_{n+1}:B_n^{\N}\onto A_{n+1},\qquad
+ a_{n+1}q_{n+1}=\joinT_{\N}b_n^{\N}.
+\end{equation}
+\end{definition}
+
+\begin{proposition}[Internal indexing]
+\label{prop:hierarchy-indexing}
+The markings of \cref{def:observation-hierarchy} are the fibres of
+subobjects $\mathcal A,\mathcal B\incl\N\times\TV$, with the fibre
+at $r$ denoted $A_{r+1},B_{r+1}$. Their image presentations are obtained
+from one construction in the slice over $\N$.
+\end{proposition}
+\begin{proof}
+Put $\Pow(\TV)=\Omega^{\TV}$. The universal membership predicate
+defines an arrow $c:\Pow(\TV)\to\Pow(\TV)$ whose value on a marking
+$U$ is the image of countable join of sequences in $U$. Explicitly,
+\begin{equation}\label{eq:powerobject-completion}
+ c(U)(p)\;\longleftrightarrow\;
+ \exists s:\TV^{\N}\,
+ \bigl[(\forall k\;U(s_k))\wedge p=\joinT_k s_k\bigr].
+\end{equation}
+This formula specifies a regular image of a universal family and hence
+an arrow of the topos. The complement action is the arrow
+$v(U)(p)=U(\negT p)$. Numerical recursion constructs the unique
+$F:\N\to\Pow(\TV)$ with $F(0)=A_1$ and $F(r+1)=c(v(F(r)))$.
+Pull back universal membership along $F\times\id$ to obtain
+$\mathcal A$; use $vF$ for $\mathcal B$.
+
+The dependent object of sequences in the fibres of $\mathcal B$ and
+its interpretation by countable join give a single image factorization
+over $\N$. Pullback along a numeral identifies it with
+\eqref{eq:successor-cover}, by stability of images. This proves both
+the indexing and compatibility of the presentations.
+\end{proof}
+
+The construction in \cref{prop:hierarchy-indexing} is an internal
+family, not merely a meta-level list. The closure theorems below are
+proved for each fixed finite level, with arbitrary object parameters.
+They do not assert a uniform choice of presentations across levels, or
+an internally quantified modestness principle for arbitrary markings.
+
+\begin{lemma}[Modesty and the first inclusion]
+\label{lem:hierarchy-base}
+Each fixed finite $A_n$ and $B_n$ is modest. There is a canonical
+inclusion $A_1\incl A_2$ over $\TV$.
+\end{lemma}
+\begin{proof}
+Modesty starts with $\Sigma$. Complement transports it by an
+isomorphism, exponentiation by $\N$ preserves it, and
+\cref{lem:modest-image} applies to the successor image. This proves
+the first assertion by induction on the finite level.
+
+Let $\beta:2\to\Sigma$ be the Boolean positive classifier. Each
+Boolean value lies in $B_1$: complement its Boolean value, apply
+$\beta$, and then use the complement isomorphism $A_1\cong B_1$.
+This defines $z:2^{\N}\to B_1^{\N}$. Its interpretation by countable
+join is $\alpha e$, because $e$ is the finite-hit classifier and
+$\alpha$ preserves the numerical positive join. Hence $\alpha e$
+factors through $A_2$. Since $e$ is epic, its image contains the image
+of $\alpha$, proving the inclusion. This uses the whole finite-hit
+cover, not a section of it.
+\end{proof}
+
+\begin{theorem}[Hierarchy operations]
+\label{thm:hierarchy-operations}
+For each fixed $n\geq1$ there are inclusions
+\[
+ A_n\incl A_{n+1},\qquad B_n\incl B_{n+1},\qquad
+ B_n\incl A_{n+1},\qquad A_n\incl B_{n+1}.
+\]
+The object $A_n$ contains the Boolean constants and is closed under
+finite meets and countable semantic joins. The object $B_n$ contains
+the Boolean constants and is closed under finite joins and countable
+semantic meets. All displayed operations and inclusion equations are
+morphisms and commute with arbitrary parameter substitution.
+\end{theorem}
+\begin{proof}
+Monotonicity of complement on markings and of $\Cw$, applied
+inductively to \cref{lem:hierarchy-base}, gives $A_n\incl A_{n+1}$.
+Complement gives $B_n\incl B_{n+1}$. The unit of $\Cw$ gives
+$B_n\incl A_{n+1}$, and complement gives $A_n\incl B_{n+1}$.
+
+At the base, the asserted positive operations are those of $\Sigma$,
+interpreted by \cref{prop:positive-stability}. If $A_n$ has finite
+joins, its complement marking $B_n$ has finite meets.
+\Cref{thm:countable-completion-reflection,lem:completion-meets}
+therefore give the positive operations on $A_{n+1}$. Complement gives
+the negative operations. This proves the induction. Each operation was
+constructed by descent as an actual arrow, and its interpretation is
+the corresponding $\TV$-operation. Equality after the marking proves
+its laws and its substitution equations in every parameter context.
+\end{proof}
+
+\subsection{Predicate objects and quantifiers}
+
+\begin{definition}[Positive, negative, and ambiguous predicates]
+\label{def:predicate-levels}
+For $X\in\E$ put
+\[
+ \SSn_n(X)=A_n^X,\qquad \PPn_n(X)=B_n^X,
+ \qquad \Delta_n=A_n\times_{\TV}B_n,
+ \qquad \DDn_n(X)=\Delta_n^X.
+\]
+All these objects are marked subobjects of $\TV^X$. A level-$n$
+predicate is a map classified by the indicated marking.
+\end{definition}
+
+\begin{proposition}[Substitution and numerical quantification]
+\label{prop:quantifier-calculus}
+The predicate objects define contravariant functors in $X$. Their
+finite operations are pointwise, and numerical quantification has the
+types
+\begin{align}
+ \exists^{\TV}_{\N}&:\SSn_n(X\times\N)\to\SSn_n(X),&
+ \forall^{\TV}_{\N}&:\PPn_n(X\times\N)\to\PPn_n(X),
+ \label{eq:same-level-quantifiers}\\
+ \exists^{\TV}_{\N}&:\PPn_n(X\times\N)\to\SSn_{n+1}(X),&
+ \forall^{\TV}_{\N}&:\SSn_n(X\times\N)\to\PPn_{n+1}(X).
+ \label{eq:cross-level-quantifiers}
+\end{align}
+These maps satisfy the Beck--Chevalley equations for substitution in
+$X$, the corresponding Fubini equations, and the finite-meet Frobenius
+equation for existential quantification whenever the displayed types
+admit its two sides.
+\end{proposition}
+\begin{proof}
+Precomposition defines substitution. Transpose a predicate on
+$X\times\N$ to a family on $X$, and apply the operations of
+\cref{thm:hierarchy-operations}. The first cross-level map is
+$q_{n+1}$ after transposition; its dual gives the second.
+The equations hold in $\TV$ by \cref{lem:stable-boolean}.
+The relevant markings are monic, so those equations descend to the
+indicated predicate objects.
+\end{proof}
+
+The existential in these formulas is $j\exists$, not the unrestricted
+ambient existential. No identification of these two operations on the
+higher levels is made. At the positive base and for a $\Sigma$-overt
+index, \cref{prop:positive-stability} gives that identification.
+
+\begin{proposition}[The ambiguous base]
+\label{prop:ambiguous-base}
+Each $\Delta_n$ is closed under the finite Boolean operations interpreted
+in $\TV$, and $\Delta_1\cong2$ over $\TV$.
+\end{proposition}
+\begin{proof}
+Both markings in the pullback are closed under finite meets and finite
+joins. Complement exchanges them, so restricts to their intersection.
+For $n=1$, a generalized element of $\Delta_1$ supplies positive
+predicates $p,q$ whose interpreted values are complements. Their meet
+and join in $\Sigma$ are $\bot$ and $\top$, since $\alpha$ preserves
+and reflects those operations. Thus they form an actual complementary
+pair of subobjects of the parameter object. Its coproduct decomposition
+gives a unique Boolean decision. Conversely a Boolean decision supplies
+that pair. The two constructions are inverse and natural in the
+parameter object, proving the isomorphism.
+\end{proof}
+
+\begin{proposition}[Universal positive projection]
+\label{prop:universal-classifier}
+The map
+\[
+ u=\forall_{\N}i^{\N}:\Sigma^{\N}\longrightarrow\Omega
+\]
+has image $B_2\incl\TV\incl\Omega$. Consequently the regular-cover
+descent completion of its presented predicates on $X$ is $B_2^X$.
+\end{proposition}
+\begin{proof}
+Universal quantification of stable predicates is stable. In $\TV$,
+De Morgan duality expresses $u$ as the complement of countable join
+of the complementary $B_1$-values. The image of that join is $A_2$.
+Transport of an image through the complement isomorphism therefore
+gives $B_2$. Apply \cref{thm:predicate-descent} to this image
+factorization. This does not identify the raw image of $u^X$ with
+$B_2^X$ without the additional lifting property of
+\cref{prop:presentation-comparison}.
+\end{proof}
+
+\section{Spectra of the inherited observation algebras}
+\label{sec:spectra}
+
+\subsection{Characters as an internally defined object}
+
+Let $(B,r)$ be a searchable approximation presentation of Paper~I, with
+$\rho(a,b)\in\Sigma$ its approximation relation. Its positive trace
+object is
+\begin{equation}\label{eq:trace-object}
+ \Gamma_r=\left\{u:B\to\Sigma\ \middle|\
+ u(b)=\bigvee_{a:B}^{\Sigma}u(a)\wedge\rho(a,b)\right\}.
+\end{equation}
+Write $D=D_r$, $\Gamma_D=\Gamma_r$, and $\delta_a(b)=\rho(a,b)$.
+The positive basis identities proved in Paper~I are
+\begin{align}
+ \top&=\bigvee_{b:B}^{\Sigma}\delta_b,
+ \label{eq:basis-top}\\
+ \delta_a&=\bigvee_{c:B}^{\Sigma}\rho(a,c)\wedge\delta_c,
+ \label{eq:basis-round}\\
+ \delta_a\wedge\delta_b
+ &=\bigvee_{c:B}^{\Sigma}\rho(a,c)\wedge\rho(b,c)\wedge\delta_c,
+ \label{eq:basis-meet}\\
+ u&=\bigvee_{b:B}^{\Sigma}u(b)\wedge\delta_b.
+ \label{eq:basis-expansion}
+\end{align}
+Joins in these equations are the joins of the trace algebra, computed
+pointwise. The base $B$ is overt; its order need not itself be positive.
+
+\begin{definition}[Semantic characters]
+\label{def:semantic-spectrum}
+The object $\overline D=\Spec_{\TV}(\Gamma_D)$ is the subobject of
+$\TV^{\Gamma_D}$ of maps $\chi$ satisfying the following equations:
+\begin{align}
+ \chi(\underline p)&=\alpha(p) &&(p:\Sigma),
+ \label{eq:char-constants}\\
+ \chi(u\wedge v)&=\chi(u)\wedge\chi(v) &&(u,v:\Gamma_D),
+ \label{eq:char-meets}\\
+ \chi(u)&=\joinT_{b:B}\alpha(u(b))\wedge\chi(\delta_b)
+ &&(u:\Gamma_D).
+ \label{eq:char-expansion}
+\end{align}
+Here $\underline p$ is the constant trace. The defining equations
+quantify over the displayed objects, so define an actual subobject of
+the exponential.
+\end{definition}
+
+\begin{proposition}[Character operations]
+\label{prop:character-operations}
+The characters of \cref{def:semantic-spectrum} are precisely the maps
+preserving finite meets, $\Sigma$-constants, and all overt-indexed joins,
+with these operations interpreted in $\TV$.
+\end{proposition}
+\begin{proof}
+Preservation of constants supplies top, so
+\eqref{eq:char-meets} supplies finite meets. If $A$ is overt and
+$v:A\to\Gamma_D$, then
+\begin{align*}
+ \chi\left(\bigvee_{a:A}^{\Sigma}v_a\right)
+ &=\joinT_{b:B}
+   \alpha\left(\bigvee_{a:A}^{\Sigma}v_a(b)\right)
+   \wedge\chi(\delta_b)\\
+ &=\joinT_{a:A}\joinT_{b:B}
+   \alpha(v_a(b))\wedge\chi(\delta_b)
+ =\joinT_{a:A}\chi(v_a).
+\end{align*}
+The middle equality uses \cref{prop:positive-stability} and Fubini.
+Conversely a map preserving the stated operations sends
+\eqref{eq:basis-expansion} to \eqref{eq:char-expansion}; it also
+satisfies the first two defining equations. Thus preservation of a
+potentially large collection of indexed operations has been reduced
+to the explicitly defined character object.
+\end{proof}
+
+\begin{theorem}[Stable basis reconstruction]
+\label{thm:stable-basis}
+The object $\overline D$ is canonically isomorphic to the object of
+maps $I:B\to\TV$ satisfying
+\begin{align}
+ \joinT_b I(b)&=\top,
+ \label{eq:stable-ideal-top}\\
+ I(a)&=\joinT_c\alpha(\rho(a,c))\wedge I(c),
+ \label{eq:stable-ideal-round}\\
+ I(a)\wedge I(b)&=
+ \joinT_c\alpha(\rho(a,c))\wedge\alpha(\rho(b,c))\wedge I(c).
+ \label{eq:stable-ideal-meet}
+\end{align}
+The inverse maps are
+\begin{equation}\label{eq:stable-basis-inverses}
+ I_\chi(b)=\chi(\delta_b),\qquad
+ \chi_I(u)=\joinT_b I(b)\wedge\alpha(u(b)).
+\end{equation}
+They are natural in arbitrary parameters.
+\end{theorem}
+\begin{proof}
+Applying a character to
+\cref{eq:basis-top,eq:basis-round,eq:basis-meet} gives the three
+equations for $I_\chi$. Conversely let $I$ satisfy those equations.
+Its interpretation on a constant trace is
+$\alpha(p)\wedge\joinT_b I(b)=\alpha(p)$. For finite meets, expand
+the two factors and apply \eqref{eq:stable-ideal-meet}:
+\begin{align*}
+ \chi_I(u)\wedge\chi_I(v)
+ &=\joinT_{a,b}I(a)\wedge I(b)\wedge\alpha(u(a))\wedge\alpha(v(b))\\
+ &=\joinT_c I(c)\wedge
+   \left(\joinT_a\alpha(u(a)\wedge\rho(a,c))\right)
+   \wedge
+   \left(\joinT_b\alpha(v(b)\wedge\rho(b,c))\right)\\
+ &=\joinT_c I(c)\wedge\alpha(u(c))\wedge\alpha(v(c))
+ =\chi_I(u\wedge v).
+\end{align*}
+The last equality uses the rounding equation of the traces and
+preservation of overt joins by $\alpha$. Further,
+$\chi_I(\delta_a)=I(a)$ by \eqref{eq:stable-ideal-round}.
+Consequently \eqref{eq:char-expansion} follows from the definition of
+$\chi_I$. Thus $\chi_I$ is a character. Evaluation at $\delta_b$
+proves $I_{\chi_I}=I$, and the expansion equation proves
+$\chi_{I_\chi}=\chi$. All the expressions are arrows with their
+parameters retained, proving naturality.
+\end{proof}
+
+The equations in this theorem are equations of stable truth. In
+particular, \eqref{eq:stable-ideal-top} asserts stable inhabitation of
+the basis predicate. It does not replace the ordinary inhabitation
+condition in the definition of the semantic domain $D_r$ of Paper~I.
+This is the precise reason to distinguish $\overline D$ from $D_r$.
+
+\subsection{Marked spectra and the recovery theorem}
+
+\begin{definition}[Graded effective points]
+\label{def:descriptive-spectrum}
+For $n\geq1$, define $D^{[n]}$ by the pullback
+\begin{equation}\label{diag:graded-spectrum}
+\begin{tikzcd}[column sep=large,row sep=large]
+ D^{[n]}\ar[r,hook,"\lambda_{D,n}"]\ar[d,hook,"\jsem_{D,n}"']&
+ A_n^{\Gamma_D}\ar[d,hook,"a_n^{\Gamma_D}"]\\
+ \overline D\ar[r,hook,"\varepsilon_D"']&\TV^{\Gamma_D}.
+\end{tikzcd}
+\end{equation}
+Write $\Profile_n(X,D)$ for the subobject of $A_n^{X\times\Gamma_D}$
+whose interpreted transpose is a family of semantic characters.
+\end{definition}
+
+\begin{theorem}[Representation of observation profiles]
+\label{thm:profile-representation}
+There is a canonical isomorphism of objects
+\begin{equation}\label{eq:profile-object}
+ (D^{[n]})^X\cong\Profile_n(X,D).
+\end{equation}
+On arrows it identifies maps $X\to D^{[n]}$ with maps
+$h:\Gamma_D\to A_n^X$ whose interpreted transpose preserves the
+observation operations. The isomorphism is natural in $X$.
+\end{theorem}
+\begin{proof}
+Exponentiate \eqref{diag:graded-spectrum} by $X$. Exponentiation is a
+right adjoint and preserves the pullback. The exponential isomorphisms
+$(A_n^{\Gamma_D})^X\cong A_n^{X\times\Gamma_D}$ and their semantic
+counterparts identify the resulting pullback with the defining
+subobject $\Profile_n(X,D)$. Explicitly, a map to $D^{[n]}$ gives its
+$A_n$-valued evaluation profile. In the other direction, the character
+condition supplies the map into $\overline D$, and the pullback gives
+the unique lift. Evaluation and transposition are inverse, so both
+composites are identities. Precomposition in $X$ commutes with every
+step.
+\end{proof}
+
+\begin{theorem}[Recovery of the original effective points]
+\label{thm:base-recovery}
+There is a natural isomorphism $D^{[1]}\cong\Pt D$.
+\end{theorem}
+\begin{proof}
+A profile at level $1$ is a map $\Gamma_D\to\Sigma$ whose
+interpretation through $\alpha$ satisfies the character equations.
+The operations on its positive values are preserved by $\alpha$.
+Monicity therefore reflects these equations, so the profile is exactly
+a $\Sigma$-character. Conversely every such character gives a level-$1$
+profile. The two constructions leave the profile unchanged and are
+inverse. Apply the two-spectrum theorem of Paper~I,
+$\Spec_\Sigma(\Gamma_D)\cong\Pt D$. Its naturality and the unchanged
+profiles prove the stated naturality.
+\end{proof}
+
+\begin{proposition}[The computational-carrier obstruction]
+\label{prop:computational-carrier-obstruction}
+Let $T\to\Omega$ be any interpretation and form
+$E_D=D\times_{\Omega^{\Gamma_D}}T^{\Gamma_D}$ using the original
+semantic profile of $D$. Every map $X\to E_2$ induces an ordinary
+decision $X\to2$. In particular such a lift cannot interpret
+termination on $P$ as its projected Boolean value.
+\end{proposition}
+\begin{proof}
+The pullback has a projection $E_2\to2$. Composition gives the
+decision. If it classified termination, its values at the
+nowhere-defined function and a total constant function would differ,
+contradicting intrinsic Rice in Paper~I.
+\end{proof}
+
+Our pullback \eqref{diag:graded-spectrum} projects to
+$\Spec_{\TV}(\Gamma_D)$. Inclusion $\TV\incl\Omega$ does not in
+general preserve the joins in the character equations, so it does not
+give a map from this spectrum to $\Spec_\Omega(\Gamma_D)$.
+The obstruction proposition thus identifies a condition that the
+changed semantic interpretation genuinely avoids.
+
+\section{Maps, products, and admissible substitution}
+\label{sec:maps}
+
+\subsection{Functoriality and independence of presentation}
+
+Let $\ObsCat$ denote the category of searchable domains with their
+positive observation algebras and the effective Scott maps of Paper~I.
+An arrow $f:D\to E$ has an observation transpose
+$f^*:\Gamma_E\to\Gamma_D$ preserving the positive operations.
+
+\begin{theorem}[Graded functoriality]
+\label{thm:graded-functoriality}
+Precomposition of characters defines functors
+\[
+ D\longmapsto\overline D,\qquad
+ D\longmapsto D^{[n]}\quad:\ObsCat\longrightarrow\E.
+\]
+The inclusions $\iota_{D,n}:D^{[n]}\incl D^{[n+1]}$ form natural
+transformations. All these constructions act jointly on parameterized
+families of observation transposes. Isomorphic positive observation
+algebras give canonically isomorphic graded spectra.
+\end{theorem}
+\begin{proof}
+Send $\chi$ to $\chi f^*$. Preservation of the positive operations by
+$f^*$ and \cref{prop:character-operations} make this a semantic
+character. If its input profile is $A_n$-valued, precomposition is still
+$A_n$-valued, so the defining pullbacks induce $f^{[n]}$.
+For $D\xrightarrow fE\xrightarrow gF$,
+$(gf)^*=f^*g^*$ and hence
+$(\chi f^*)g^*=\chi(gf)^*$. This proves composition; the identity
+equation is immediate. The same formulas are maps of the relevant
+exponentials, so the action is joint in all parameters for which the
+observation transpose is defined.
+
+The mono $A_n\incl A_{n+1}$ induces $\iota_{D,n}$ by pullback.
+The naturality square
+\begin{equation}\label{diag:level-naturality}
+\begin{tikzcd}[column sep=large]
+ D^{[n]}\ar[r,"f^{[n]}"]\ar[d,hook,"\iota_{D,n}"']&
+ E^{[n]}\ar[d,hook,"\iota_{E,n}"]\\
+ D^{[n+1]}\ar[r,"f^{[n+1]}"']&E^{[n+1]}
+\end{tikzcd}
+\end{equation}
+commutes because both profiles are $\chi f^*$. Coherence for multiple
+level inclusions follows by the same monicity argument. Finally an
+isomorphism of trace algebras and its inverse induce inverse maps on
+characters and on each pullback.
+\end{proof}
+
+\subsection{Semantic products and their exact graded domain}
+
+For product presentations, write $u\otimes v$ for the trace
+$(b,c)\mapsto u(b)\wedge v(c)$. The product presentation of Paper~I
+has base $B\times C$ and approximation relation $\rho\times\sigma$.
+Its coordinate traces are $\delta_b\otimes\delta_c$.
+
+\begin{theorem}[Semantic product reconstruction]
+\label{thm:semantic-products}
+There is a canonical isomorphism
+\begin{equation}\label{eq:semantic-product}
+ \overline{D\times E}\cong\overline D\times\overline E.
+\end{equation}
+For characters $\chi,\psi$, its inverse has profile
+\begin{equation}\label{eq:product-profile}
+ \Phi_{\chi,\psi}(w)=
+ \joinT_{b:B,c:C}
+ \chi(\delta_b)\wedge\psi(\delta_c)\wedge\alpha(w(b,c)).
+\end{equation}
+\end{theorem}
+\begin{proof}
+Restrict a product character along $u\mapsto u\otimes\top$ and
+$v\mapsto\top\otimes v$ to obtain its two marginals. Conversely,
+let $I(b)=\chi(\delta_b)$ and $J(c)=\psi(\delta_c)$. The function
+$K(b,c)=I(b)\wedge J(c)$ satisfies the three stable basis equations
+for the product relation. For the top equation, distribute the two
+joins. For rounding, distribute the two rounding equations. For the
+meet equation, distribute the two equations
+\eqref{eq:stable-ideal-meet}. Thus \cref{thm:stable-basis} constructs
+the product character, with profile \eqref{eq:product-profile}.
+
+Its first marginal is $\chi$, since $\joinT_cJ(c)=\top$, and the
+second is $\psi$. Conversely a product character $\theta$ satisfies
+\[
+ \theta(\delta_b\otimes\delta_c)
+ =\theta(\delta_b\otimes\top)\wedge
+  \theta(\top\otimes\delta_c).
+\]
+Thus it agrees on every coordinate with the character reconstructed
+from its marginals. The expansion equation gives equality on every
+trace. These are inverse morphisms, uniformly in parameters.
+\end{proof}
+
+\begin{theorem}[Exact graded product comparison]
+\label{thm:graded-product-domain}
+The canonical comparison
+\[
+ c_{D,E,n}:(D\times E)^{[n]}\longrightarrow D^{[n]}\times E^{[n]}
+\]
+is monic. Under \eqref{eq:semantic-product}, its image is the subobject
+$K_n(D,E)$ defined by
+\begin{equation}\label{eq:product-admission}
+ (\chi,\psi)\in K_n(D,E)quad\longleftrightarrow\quad
+ \forall w:\Gamma_{D\times E}\;
+       \Phi_{\chi,\psi}(w)\in A_n.
+\end{equation}
+In particular $(D\times E)^{[n]}\cong K_n(D,E)$, naturally in both
+variables. At level $1$ the comparison is an isomorphism.
+\end{theorem}
+\begin{proof}
+Projections induce the comparison by \cref{thm:graded-functoriality}.
+After inclusion into the semantic spectra it is the isomorphism
+\eqref{eq:semantic-product}, so it is monic. Its profile belongs to
+$A_n^{\Gamma_{D\times E}}$ exactly when all its values do. This is
+\eqref{eq:product-admission}. Monicity of $a_n$ gives the unique
+joint factorization, and the pullback
+\eqref{diag:graded-spectrum} supplies the inverse on that subobject.
+The construction is natural because restriction of characters commutes
+with projections and with their reconstruction. At the base level use
+\cref{thm:base-recovery} and the effective product theorem of Paper~I.
+\end{proof}
+
+The quantifier over $w$ in \eqref{eq:product-admission} is an ordinary
+subobject condition. It is not asserted to be a positive predicate.
+The theorem gives the full comparison map and its maximal domain of
+inverse reconstruction. Countable-join closure alone does not remove
+that condition: the joins in \eqref{eq:product-profile} range over
+the overt bases $B$ and $C$, which need not be $\N$.
+
+Equivalently, the admissibility subobject is the explicit pullback
+\begin{equation}\label{diag:product-admission}
+\begin{tikzcd}[column sep=large,row sep=large]
+ K_n(D,E)\ar[r]\ar[d,hook]&
+ A_n^{\Gamma_{D\times E}}\ar[d,hook,"a_n^{\Gamma_{D\times E}}"]\\
+ D^{[n]}\times E^{[n]}\ar[r,"\Phi"']&
+ \TV^{\Gamma_{D\times E}}.
+\end{tikzcd}
+\end{equation}
+Thus the comparison has a constructed inverse on a canonical domain,
+even before a full-domain product theorem is available.
+
+\subsection{Maximal restrictions and composition}
+
+The semantic spectra also allow arbitrary morphisms
+$f:\overline D\to\overline E$ in $\E$, whether or not they arise
+from old effective Scott maps. Write $j_{D,m}=\jsem_{D,m}$ in this
+subsection.
+
+\begin{definition}[Graded admission domain]
+\label{def:graded-admission}
+For $m,n\geq1$, define $\Adm_{m,n}(f)$ by
+\begin{equation}\label{diag:graded-admission}
+\begin{tikzcd}[column sep=large]
+ \Adm_{m,n}(f)\ar[r,"\widehat f_{m,n}"]\ar[d,hook,"d_f"']&
+ E^{[n]}\ar[d,hook,"j_{E,n}"]\\
+ D^{[m]}\ar[r,"f j_{D,m}"']&\overline E.
+\end{tikzcd}
+\end{equation}
+It represents a partial map $D^{[m]}\pmap E^{[n]}$ with its displayed
+subobject domain. No dominance classification of that domain is
+included in this definition.
+\end{definition}
+
+\begin{theorem}[Maximal restriction and substitution]
+\label{thm:admissible-substitution}
+The restriction in \eqref{diag:graded-admission} is maximal among
+restrictions of $f j_{D,m}$ landing in $E^{[n]}$. For
+$f:\overline D\to\overline E$ and
+$g:\overline E\to\overline F$, the sequential domain is
+\begin{equation}\label{eq:sequential-domain}
+ S=\Adm_{m,n}(f)\times_{E^{[n]}}\Adm_{n,r}(g).
+\end{equation}
+There is a canonical mono
+$S\incl\Adm_{m,r}(gf)$ on which the two restricted maps agree.
+These comparisons satisfy identity and associativity coherence.
+\end{theorem}
+\begin{proof}
+A subobject $U\incl D^{[m]}$ together with a factorization of
+$f j_{D,m}|_U$ through $E^{[n]}$ is precisely a cone over the
+pullback defining $\Adm_{m,n}(f)$. It therefore factors uniquely
+through its domain, proving maximality.
+
+A point of the pullback \eqref{eq:sequential-domain} is an admitted
+input $x$ such that $f(x)$ is at level $n$ and $g(f(x))$ is at level
+$r$. It therefore gives a point of the direct admission domain of
+$gf$. Categorically the two pullback squares paste to give the unique
+map $S\to\Adm_{m,r}(gf)$ over $D^{[m]}$. It is monic, since both
+are subobjects there. Both output maps become $gf j_{D,m}|_S$ after
+the mono $j_{F,r}$, so agree.
+
+For three maps, either parenthesization gives the subobject on which
+the first, second, and final intermediate values have their prescribed
+grades. Associativity of pullbacks gives its canonical identification,
+and uniqueness of the maps over the input proves the comparison
+coherence. The same-grade restriction of an identity has its full
+domain; its unit equations follow from the identity pullback.
+\end{proof}
+
+This is a calculus in the category of partial maps with arbitrary mono
+domains. The direct admission domain may be larger than the sequential
+one, because direct admission does not impose the intermediate grade.
+The comparison is thus an inclusion of domains, not an unproved equality.
+
+\begin{corollary}[Typed composition of graded points]
+\label{cor:typed-composition}
+There is an $\E$-enriched category with objects the pairs $(D,n)$ and
+hom-objects $(E^{[r]})^{D^{[n]}}$. Its composition is evaluation and
+transposition. The full-domain restrictions of the preceding theorem
+compose whenever the intermediate grade matches.
+\end{corollary}
+\begin{proof}
+Use the internal composition and identity maps of the cartesian closed
+category $\E$ on the displayed objects. Their associativity and unit
+equations are the exponential equations. If both restrictions have full
+domain, their sequential domain is all of the input object. The preceding
+theorem then makes the composite restriction full-domain as well.
+\end{proof}
+
+This typed category does not supply a shift endofunctor on all its
+hom-objects. Such a shift would require an operation transporting an
+arbitrary map $D^{[m]}\to E^{[n]}$ to the shifted grades and preserving
+composition. The construction of that additional operation is recorded
+in \cref{prob:jump-comparison}.
+
+\section{Decisions, termination, and totality}
+\label{sec:examples}
+
+\subsection{Finite discrete targets}
+
+\begin{theorem}[The changed Boolean target]
+\label{thm:boolean-spectrum}
+For the fully observed discrete object $2$ there are canonical
+isomorphisms
+\[
+ \overline2\cong\TV,\qquad 2^{[n]}\cong\Delta_n.
+\]
+At level $1$ these recover $2^{[1]}\cong2$.
+\end{theorem}
+\begin{proof}
+Here $\Gamma_2=\Sigma^2$. Let $\epsilon_0,\epsilon_1$ be the two
+singleton observations. A character has values $p,q$ on them with
+$p\wedge q=\bot$ and $p\vee^{\TV}q=\top$, so $q=\negT p$.
+Every trace $(a,b)$ decomposes as
+$\underline a\wedge\epsilon_0\vee\underline b\wedge\epsilon_1$.
+Thus the character is necessarily
+\begin{equation}\label{eq:boolean-character}
+ \chi_p(a,b)=(p\wedge\alpha(a))\vee^{\TV}
+                 (\negT p\wedge\alpha(b)).
+\end{equation}
+Conversely this formula is a character: it interprets a trace on a
+Boolean partition, and finite distributivity and the indexed join
+equations prove preservation of its operations. Evaluation at
+$\epsilon_0$ is the inverse, proving $\overline2\cong\TV$.
+
+A level-$n$ character has both $p$ and $\negT p$ in $A_n$.
+Conversely these two memberships, the inclusion $A_1\incl A_n$,
+and finite closure make \eqref{eq:boolean-character} jointly
+$A_n$-valued. The condition is exactly $p\in A_n\cap B_n$.
+This gives the second isomorphism, and \cref{prop:ambiguous-base}
+gives its base instance.
+\end{proof}
+
+\begin{proposition}[Finite partition targets]
+\label{prop:finite-target-products}
+For a nonempty finite discrete object $F$ with all positive observations,
+the object $F^{[n]}$ is the object of $A_n$-valued finite partitions
+$(p_a)_{a\in F}$ of $\top$ in $\TV$. For nonempty finite discrete
+$F,G$, the comparison
+$(F\times G)^{[n]}\to F^{[n]}\times G^{[n]}$ is an isomorphism.
+\end{proposition}
+\begin{proof}
+Evaluate a character on the singleton observations. Their finite
+partition equations give pairwise disjoint $p_a$ with join $\top$.
+Every positive trace $u$ has the finite expansion
+$\bigvee_{a\in F}\underline{u(a)}\wedge\epsilon_a$, so its value is
+$\bigvee_{a\in F}^{\TV}p_a\wedge\alpha(u(a))$. Conversely this
+formula defines a character and is $A_n$-valued precisely when its
+singleton values are. Given two partitions, the products $p_a\wedge q_b$
+form a partition indexed by $F\times G$ at the same level. Taking
+marginals is its inverse, by the partition equations. These operations
+are morphisms by finite closure.
+\end{proof}
+
+\subsection{The intrinsic first separation}
+
+\begin{theorem}[First separation]
+\label{thm:first-separation}
+For any fixed numeral $k$, the complement in $\TV$ of
+$\alpha H(-,k)$ is a $B_1$-classified predicate on $P$ which is not
+$A_1$-classified. In particular $\SSn_1(P)\incl\SSn_2(P)$ is proper.
+\end{theorem}
+\begin{proof}
+Membership in $B_1$ is the definition of that marking. If the complement
+also had an $A_1$-classifier, it and $H(-,k)$ would be positive
+predicates with meet $\bot$ and join $\top$: their finite operations
+can be checked in $\TV$ and reflected by $\alpha$. The resulting
+complementary pair would give a map $P\to2$ distinguishing the
+nowhere-defined function from a total constant function. This
+contradicts intrinsic Rice in Paper~I. Since $B_1\incl A_2$, the
+displayed predicate witnesses the proper inclusion.
+\end{proof}
+
+\begin{corollary}[A new Boolean observation]
+\label{cor:new-boolean-map}
+There is a map $h_k:P\to2^{[2]}$ with semantic Boolean value
+$\alpha H(-,k)$. It does not factor through the natural inclusion
+$2^{[1]}\incl2^{[2]}$.
+\end{corollary}
+\begin{proof}
+Both $\alpha H(-,k)$ and its complement belong to $A_2$, by the
+inclusions $A_1\incl A_2$ and $B_1\incl A_2$. Therefore
+\cref{thm:boolean-spectrum} gives $h_k$. Explicitly its profile is
+\eqref{eq:boolean-character} with $p=\alpha H(f,k)$, uniformly in
+$f$. A factorization through $2^{[1]}\cong2$ would classify
+termination by an ordinary Boolean decision, contrary to the preceding
+theorem.
+\end{proof}
+
+\begin{proposition}[Totality]
+\label{prop:totality-classification}
+The predicate
+$\Tot(f)=\forall n:\N\,iH(f,n)$ is $B_2$-classified and is not
+$A_1$-classified.
+\end{proposition}
+\begin{proof}
+Transpose $H$ to $P\to\Sigma^{\N}$ and apply
+\cref{prop:universal-classifier}. Nonpositivity follows from the
+intrinsic finite-information theorem of Paper~I. More explicitly, the
+increasing finite partial identities have total supremum and no total
+member. A positive classifier on $P$ would preserve this increasing
+supremum, so could not take value $\top$ at the supremum and $\bot$
+at every stage.
+\end{proof}
+
+These examples use the intrinsic computation object and its observation
+theorems. No program index or universal numerical predicate has entered
+their construction.
+
+\section{Numerical normal forms and strictness}
+\label{sec:numerical}
+
+We now compare the constructed hierarchy with the numerical presentation
+already available in Paper~I. This section uses its program cover
+$q:\N\onto P$ and its adequate evaluation map. The previous sections
+did not use this cover. A statement about external supports below is a
+statement about the underlying subsets of the standard natural numbers;
+it is distinguished from an assertion about all generalized predicates.
+
+\subsection{Global presentations on partitioned domains}
+
+\begin{proposition}[Numerical normal forms]
+\label{prop:numerical-normalforms}
+For each fixed $n\geq1$ and each partitioned assembly $C$, a map
+$p:C\to\TV$ is $A_{n+1}$-classified if and only if there is an
+actual map $v:C\times\N\to B_n$ such that
+\begin{equation}\label{eq:numerical-normalform}
+ p(x)=\joinT_k b_n(v(x,k)).
+\end{equation}
+The dual statement characterizes $B_{n+1}$ by countable meets of
+$A_n$-predicates. This includes every finite power $C=\N^d$.
+\end{proposition}
+\begin{proof}
+If $p$ has its $A_{n+1}$-classifier, apply the modest-target lifting
+lemma of Paper~I to that map and the cover
+$q_{n+1}:B_n^{\N}\onto A_{n+1}$. Its domain is modest by
+\cref{lem:hierarchy-base} and exponential closure. The resulting
+map $C\to B_n^{\N}$ transposes to the required $v$.
+Conversely transpose $v$ and compose with $q_{n+1}$ to obtain the
+classifier. Complement proves the dual statement.
+\end{proof}
+
+This proposition supplies an actual normal form for each numerical
+predicate. It does not choose normal forms naturally for all domains,
+and it does not identify the two sides of
+\eqref{eq:presentation-comparison} for arbitrary $X$.
+
+\begin{theorem}[Finite arithmetical calibration]
+\label{thm:arithmetical-calibration}
+For each fixed $n\geq1$ and finite $d\geq1$, the external supports
+of maps $\N^d\to A_n$ are exactly the $\Sigma^0_n$ predicates, and
+the external supports of maps $\N^d\to B_n$ are exactly the
+$\Pi^0_n$ predicates. Here the numerical hierarchy starts with the
+c.e. predicates, takes complement for $\Pi^0_n$, and forms
+$\Sigma^0_{n+1}$ by existential numerical projection of uniformly
+$\Pi^0_n$ predicates. The ambiguous level has support class
+$\Delta^0_n$.
+\end{theorem}
+\begin{proof}
+At level $1$, finite-hit classification on the partitioned object
+$\N^d$ gives a tracked family of binary streams for any positive
+predicate. Searching for a hit enumerates its support. Conversely a
+c.e. predicate has a uniformly decidable bounded-stage hit test; its
+binary stream and the finite-hit classifier give a map into $\Sigma$.
+This is also the numerical positive-predicate comparison of Paper~I.
+
+The object $\TV$ is the codiscrete Boolean assembly. Consequently a
+map from an assembly into $\TV$ is determined by its underlying
+Boolean-valued function. Semantic complement takes the complement of
+the support, and semantic numerical join takes its existential
+projection. Suppose the calibration holds at level $n$, for all finite
+arities. By \cref{prop:numerical-normalforms}, a positive predicate
+at level $n+1$ has the support of an existential projection of a
+$B_n$-predicate on $\N^{d+1}$, hence a $\Sigma^0_{n+1}$ support.
+Conversely a uniformly $\Pi^0_n$ predicate in those variables has a
+$B_n$-classifier by the induction statement. Transpose it and apply
+$q_{n+1}$ to obtain the required classifier of its projection.
+Complement proves the negative assertion. Induction completes the
+calibration. Finally the pullback defining $\Delta_n$ asks for both
+classifiers of the same support, giving precisely the intersection
+of these two support classes.
+\end{proof}
+
+The definition of the numerical hierarchy in the theorem fixes the
+uniformity convention. In particular, an arbitrary external sequence
+of predicates is not a numerical family unless its dependence on the
+sequence variable is represented jointly. This is why the exponential
+and lifting arguments are part of the comparison proof.
+
+\subsection{Universality obtained after reconstruction}
+
+Fix the numerical pairing isomorphism
+$\langle-,-\rangle:\N\times\N\cong\N$ of Paper~I.
+The first universal predicate is the existing termination observation
+pulled back along the program cover:
+\begin{equation}\label{eq:first-universal}
+ U_1(e,x)=H(q(e),x):\N\times\N\longrightarrow A_1.
+\end{equation}
+
+\begin{lemma}[Universality at the positive base]
+\label{lem:base-universal}
+For every morphism $p:\N\to A_1$, there is a numeral $e$ such that
+$p(x)=U_1(e,x)$ for all $x$, as maps to $A_1$.
+\end{lemma}
+\begin{proof}
+The positive predicate defines the partial constant-zero function with
+domain $p$. Its finite graph trace is positive: a finite graph belongs
+precisely when each of its finitely many output values is zero and
+each input satisfies $p$. The trace defines an effective point of the
+partial-function domain, hence a point of $P$. Its termination
+predicate is $p$. Lift that point through $q:\N\onto P$ using the
+partitioned source $1$ and the modest domain $\N$. The resulting
+numeral is the required $e$. Adequacy of evaluation through the
+program cover identifies its termination observation with
+\eqref{eq:first-universal}.
+\end{proof}
+
+\begin{theorem}[Universal numerical predicates]
+\label{thm:universal-predicates}
+For every fixed $n\geq1$ there is a map
+$U_n:\N\times\N\to A_n$ such that every morphism $p:\N\to A_n$
+is equal to $U_n(e,-)$ for some numeral $e$. The semantic values can
+be chosen recursively by
+\begin{equation}\label{eq:universal-successor}
+ a_{n+1}U_{n+1}(e,x)=
+ \joinT_k\negT\bigl(a_nU_n(e,\langle x,k\rangle)\bigr).
+\end{equation}
+\end{theorem}
+\begin{proof}
+The first level is \cref{lem:base-universal}. Given $U_n$, complement
+its interpretation to obtain a joint $B_n$-predicate in $(e,x,k)$.
+Transpose in $k$ and apply $q_{n+1}$. This constructs $U_{n+1}$
+as an actual morphism with the stated interpretation.
+
+Let $p:\N\to A_{n+1}$. By
+\cref{prop:numerical-normalforms}, choose a map
+$v:\N\times\N\to B_n$ whose join presents $p$. Complement $v$
+and transport along the inverse pairing isomorphism to obtain a map
+$w:\N\to A_n$. Universality at level $n$ supplies an $e$ with
+$w(z)=U_n(e,z)$. Substitute $z=\langle x,k\rangle$ and use
+\eqref{eq:universal-successor}; the interpreted maps $p$ and
+$U_{n+1}(e,-)$ agree. Monicity of $a_{n+1}$ gives equality of the
+classifiers. This proves universality at the next level.
+\end{proof}
+
+Universality here quantifies over actual morphisms $\N\to A_n$.
+It does not assert, without a further parameterized enumeration proof,
+that the transpose $\N\to A_n^{\N}$ is regular epic. The formulation
+proved is exactly what the following diagonal argument requires.
+
+\begin{theorem}[Strictness at every finite level]
+\label{thm:finite-strictness}
+For every fixed $n\geq1$, the predicate
+\begin{equation}\label{eq:descriptive-diagonal}
+ d_n(x)=\negT\bigl(a_nU_n(x,x)\bigr)
+\end{equation}
+is $B_n$-classified but is not $A_n$-classified. Consequently all
+three sequences of predicate objects on $\N$ are strictly increasing:
+\[
+ \SSn_n(\N)\subsetneq\SSn_{n+1}(\N),\qquad
+ \PPn_n(\N)\subsetneq\PPn_{n+1}(\N),\qquad
+ \DDn_n(\N)\subsetneq\DDn_{n+1}(\N).
+\]
+\end{theorem}
+\begin{proof}
+The negative classifier is obtained by complement. If there were an
+$A_n$-classifier for $d_n$, \cref{thm:universal-predicates} would
+supply a numeral $e$ with
+$a_nU_n(e,x)=d_n(x)$. At $x=e$ this gives a Boolean algebra element
+equal to its own complement. Such an element would equal $\bot$ by
+taking its meet with itself and then equal $\top$ by complement,
+contradicting nondegeneracy of $\TV$.
+
+Since $B_n\incl A_{n+1}$, this predicate witnesses properness of
+the positive inclusion. Complement transports that properness to
+the negative inclusion. Finally $d_n$ belongs to both $B_{n+1}$ and
+$A_{n+1}$, using $B_n\incl B_{n+1}$ and $B_n\incl A_{n+1}$.
+It therefore has a $\Delta_{n+1}$-classifier, but no
+$\Delta_n$-classifier because it has no $A_n$-classifier.
+The claimed proper inclusions follow.
+\end{proof}
+
+This proof derives strictness from the completed observation hierarchy
+and the inherited universal computation object. It does not use an
+external strictness theorem as a premise.
+
+\section{Comparison maps and their scope}
+\label{sec:comparison}
+
+\subsection{Observation profiles and represented-space jumps}
+
+Pauly--de~Brecht's framework represents modified open predicates by a
+modified Sierpi\'nski object, and uses an admissibility comparison to
+recover maps from observation profiles \cite[Sections~2.1--2.3]{paulydebrecht}.
+Our corresponding object is the explicit pullback
+\eqref{diag:graded-spectrum}; \cref{thm:profile-representation} gives
+its reconstruction theorem. Their concrete limit-based examples
+depend on representations \cite[Section~3.1]{paulydebrecht}.
+De~Brecht develops jump operators as abstractions of limit computation
+and relates them to levels of discontinuity \cite{debrechtjump}.
+
+The numerical comparison is already exact by
+\cref{thm:arithmetical-calibration}. A comparison on general spaces
+requires more data: a correspondence between their observation
+algebras, an interpretation of names, and a proof that the relevant
+predicate descent and character reconstruction agree. In particular,
+matching the external supports of predicates does not determine a
+map between their classifier objects.
+
+\begin{problem}[Endofunctor comparison]
+\label{prob:jump-comparison}
+Construct a category containing the graded effective-point objects,
+with its observation structures, and construct a shift on its
+hom-objects compatible with evaluation and composition. Identify its
+action on the positive classifier with the successor marking, and
+construct the comparison with a limit-jump presentation. The comparison
+must include the resulting product maps and the admissibility domain
+\eqref{eq:product-admission}.
+\end{problem}
+
+The already proved functors have type $\ObsCat\to\E$; their output
+objects have not been identified with objects of $\ObsCat$. The typed
+category in \cref{cor:typed-composition} supplies composition at
+matching grades, and \cref{thm:admissible-substitution} supplies
+maximal restrictions of semantic maps. These results give concrete
+inputs to the problem, but neither supplies its shift operation.
+
+\subsection{Boolean observation algebras and localic comparison}
+
+Chen constructs localic descriptive notions using Boolean completions
+of frames and regular completion under images \cite{chen}. This
+makes comparison with our completion and descent constructions natural.
+There is a distinction in the universal properties: $\Cw$ completes a
+specified marking inside a fixed semantic truth object, whereas a free
+Boolean completion has a universal mapping property into varying
+Boolean algebras. The distinction can be stated by an explicit
+evaluation map.
+
+\begin{proposition}[Faithful semantic evaluation]
+\label{prop:semantic-evaluation}
+The transpose of the semantic profile defines a mono
+\begin{equation}\label{eq:semantic-evaluation}
+ \eta_D:\Gamma_D\incl\TV^{\overline D},\qquad
+ \eta_D(u)(\chi)=\chi(u).
+\end{equation}
+It preserves the positive operations, interpreting them pointwise in
+$\TV$.
+\end{proposition}
+\begin{proof}
+Operation preservation is the character condition. For monicity, each
+basis point $r(b)$ of Paper~I is effective and hence, by
+\cref{thm:base-recovery}, supplies a point of $\overline D$ jointly
+in $b$. Evaluation of $u$ there is $\alpha(u(b))$, since its positive
+character evaluates the rounded trace at $b$. If two traces have the
+same image under $\eta_D$, these evaluations agree for every $b$.
+Monicity of $\alpha$ gives equality of the traces. This argument
+retains arbitrary parameters, so proves that $\eta_D$ is monic.
+\end{proof}
+
+\begin{definition}[The semantic Boolean observation hull]
+\label{def:semantic-hull}
+Inside the Boolean algebra $\TV^{\overline D}$, let $\mathcal H_D$
+be the intersection of all subobjects which contain the image of
+$\eta_D$ and are closed under complement, finite meets, and countable
+semantic joins. The intersection is taken over the power object of
+$\TV^{\overline D}$.
+\end{definition}
+
+\begin{proposition}[Semantic hull and substitution]
+\label{prop:semantic-hull}
+The object $\mathcal H_D$ exists and has the displayed operations.
+It is the least such subalgebra inside $\TV^{\overline D}$.
+For an old effective map $f:D\to E$, precomposition with
+$\overline f$ restricts to a map $\mathcal H_E\to\mathcal H_D$,
+functorially.
+\end{proposition}
+\begin{proof}
+The family being intersected is inhabited by the whole exponential.
+Membership in every member defines a subobject using the power object.
+If the inputs to any of the specified operations belong to every
+member, its output belongs to every member by their closure. Thus
+the operations restrict uniquely to the intersection. The universal
+property of intersection proves leastness.
+
+Precomposition preserves the pointwise operations. The inverse image
+of $\mathcal H_D$ under precomposition with $\overline f$ is a
+subalgebra of $\TV^{\overline E}$. It contains $\eta_E(\Gamma_E)$,
+because
+\[
+ \eta_E(u)\,\overline f=\eta_D(f^*u).
+\]
+Leastness therefore makes it contain $\mathcal H_E$, giving the
+restriction. Identity and composition follow from precomposition,
+or from their equations after the mono into the exponential.
+\end{proof}
+
+This hull is a concrete semantic algebra to which a localic comparison
+can map. Its universal property is relative to its ambient function
+algebra; no freeness into arbitrary Boolean algebras is inferred.
+Also, its predicates live on $\overline D$, whereas the objects
+$\SSn_n(X)$ classify effective predicates on the specified input
+$X$. Keeping those domains visible is necessary for a comparison
+between the two constructions.
+
+\subsection{Truth operations and local operators}
+
+Kihara relates oracle access, changes of representation, and operations
+on truth values \cite{kihara}. This is relevant to the oracle
+constructions of Paper~I, but there are three different operations in
+the present development. The local operator $j=\neg\neg$ supplies
+the stable semantic truth object. The reflection $\Cw$ completes
+markings under countable join. The operation
+$M\mapsto\Cw(\negT M)$ advances the descriptive hierarchy.
+
+Their types and universal properties distinguish them. The first acts
+on $\Omega$, the second on a poset of marked subobjects of $\TV$,
+and the third combines the second with an involution. By
+\cref{thm:finite-strictness}, the last operation is not idempotent on
+the constructed chain. It therefore cannot be identified, on that
+chain, with an idempotent reflection merely from the existence of a
+truth-value interpretation.
+
+\begin{proof}[Proof of \cref{main:hierarchy,main:spectra,main:separation}]
+\Cref{prop:positive-stability,thm:countable-completion-reflection,
+prop:hierarchy-indexing,thm:hierarchy-operations,prop:quantifier-calculus}
+give \cref{main:hierarchy}. The constructions and representation
+theorem in \cref{sec:spectra}, followed by
+\cref{thm:graded-functoriality,thm:semantic-products,
+thm:graded-product-domain,thm:admissible-substitution}, give
+\cref{main:spectra}. Finally
+\cref{thm:first-separation,cor:new-boolean-map,
+prop:totality-classification,thm:arithmetical-calibration,
+thm:universal-predicates,thm:finite-strictness}
+give \cref{main:separation}.
+\end{proof}
+
+\section{Further constructions}
+\label{sec:further}
+
+The finite theory supplies classifiers, numerical quantifiers, semantic
+spectra, and exact admission domains. Several subsequent constructions
+can now be formulated without choosing a syntax of descriptive codes
+as their foundation.
+
+\begin{problem}[Transfinite observation stages]
+\label{prob:transfinite}
+Construct an object of stage presentations and their comparison maps,
+with successor given by the already constructed operation on markings.
+For a limit stage, construct the family of lower-stage interpretations,
+its image, and its descent theorem. Determine its numerical and spectral
+operations, including the uniformity required when the lower stage
+varies with an input parameter.
+\end{problem}
+
+The internal family of \cref{prop:hierarchy-indexing} provides the
+finite starting diagram. A transfinite construction must additionally
+exhibit the stage comparisons and recursion principle; a family of
+externally specified ordinals alone would not provide those arrows.
+
+\begin{problem}[Analytic projection]
+\label{prob:analytic}
+Starting from the inherited object of infinite numerical data, construct
+the image of the semantic existential projection on the appropriate
+relation object. Identify its presentation covers and the descent
+needed for a classifier on arbitrary input objects. Construct the
+corresponding spectral interpretation and its substitution maps.
+\end{problem}
+
+The operation $j\exists$ on all stable predicates is already available,
+but its restriction to an effective marking is a separate image
+construction. \Cref{thm:predicate-descent} applies once that
+interpretation and its image have been constructed; it does not
+identify the resulting effective class in advance.
+
+\begin{problem}[Well-founded relations and ranks]
+\label{prob:ranks}
+Construct the relevant objects of well-founded relations, their
+recursion operations, and rank comparisons. Establish the relation
+between inductive accessibility and the negative assertion that no
+infinite descending sequence exists. Derive the boundedness statements
+needed to compare their stages with the descriptive hierarchy.
+\end{problem}
+
+These are distinct constructive notions of well-foundedness until the
+comparison has been proved. The stable semantic interpretation alone
+does not identify them. The rank and boundedness constructions are also
+the point at which analogues of admissibility and stronger ordinal
+closure properties can be investigated within the framework.
+
+\begin{problem}[Structural set-theoretic interpretation]
+\label{prob:structural-sets}
+From the resulting well-founded structures, construct a category of
+families and a distinguished class of maps, together with the generic
+family and the closure, collection, and descent constructions required
+for an algebraic set-theoretic interpretation. Construct the comparison
+between material descriptions and structural families and prove its
+coherence with the descriptive operations.
+\end{problem}
+
+The regular descent and spectral reconstruction proved here specify
+how descriptions can acquire invariant denotations. They do not by
+themselves construct the small-map structure or a material universe.
+Those structures are the outputs requested by
+\cref{prob:structural-sets}, after the analytic and rank constructions
+have been supplied.
+
+\appendix
+\section{Interface with the preceding manuscript}
+\label{app:imports}
+
+This manuscript is self-contained as a LaTeX source. Mathematical
+dependencies on Paper~I are cited by result name, so that recompiling
+either paper does not invalidate the references. The following table
+records the exact labels in the supplied source of Paper~I for future
+cross-document linking. These strings are identifiers, not additional
+mathematical premises.
+
+\begingroup\small
+\begin{longtable}{L{.32\linewidth}L{.40\linewidth}L{.19\linewidth}}
+\toprule
+Result in Paper~I & Source label & Use here\\
+\midrule
+\endfirsthead
+\toprule
+Result in Paper~I & Source label & Use here\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Indexed coreflection of admissible families &
+\texttt{thm:admissibility-coreflection} & Maximal domains\\
+Modest-target lifting & \texttt{lem:modest-target-lift} & Cover lifting\\
+Function names and subobjects & \texttt{lem:modestclosure} & Modest closure\\
+Finite-hit classification & \texttt{thm:finitehit} & Positive base\\
+Relative foundation & \texttt{thm:relativefoundation} & Numerical joins\\
+Finite-hit name presentations & \texttt{lem:sigmamodest} & Modesty of $\Sigma$\\
+Two-spectrum reconstruction & \texttt{jd:thm:spectra} & Base recovery\\
+Positive observation duality & \texttt{jd:cor:duality} & Maps on profiles\\
+Products of searchable presentations & \texttt{prop:productpresentation} & Product traces\\
+Intrinsic Rice and halting & \texttt{thm:intrinsichalting} & First separation\\
+Intrinsic finite information & \texttt{thm:observationfullness} & Totality\\
+Nonpositivity corollary & \texttt{cor:intrinsicnonpositive} & Separation\\
+Numerical program cover & \texttt{prop:codecover} & Universality\\
+Modal-singleton classifier for sheafification &
+\texttt{thm:oracle-singleton-classifier} & Semantic background\\
+\end{longtable}
+\endgroup
+
+\section{Notation and logical interpretations}
+\label{app:notation}
+
+\begin{longtable}{L{.26\linewidth}L{.66\linewidth}}
+\toprule
+Notation & Meaning\\
+\midrule
+\endfirsthead
+\toprule
+Notation & Meaning\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+$\E$ & The effective topos of Paper~I.\\
+$i:\Sigma\incl\Omega$ & The inherited positive classifier.\\
+$\TV=\Omega_{\neg\neg}$ & Stable semantic truth; its joins are
+double-negation closures of ambient joins.\\
+$\alpha:\Sigma\incl\TV$ & The stable interpretation of positive truth.\\
+$\Cw$ & Countable-join reflection on modest markings of $\TV$.\\
+$A_n,B_n$ & Positive and negative markings at finite level $n$.\\
+$\Delta_n$ & Their intersection over $\TV$, classifying ambiguous predicates.\\
+$\SSn_n(X),\PPn_n(X)$ & The exponential predicate objects $A_n^X,B_n^X$.\\
+$\Gamma_D$ & The positive trace algebra inherited from the searchable domain $D$.\\
+$\overline D$ & The semantic spectrum $\Spec_{\TV}(\Gamma_D)$.\\
+$D^{[n]}$ & The subobject of semantic characters with jointly $A_n$-valued profile.\\
+$\Adm_{m,n}(f)$ & The maximal level-$m$ domain on which a semantic map
+has level-$n$ output.\\
+$\mathcal H_D$ & The least Boolean, countably join-closed semantic
+observation subalgebra containing $\Gamma_D$.\\
+\end{longtable}
+
+In particular, $\Sigma$ is not the subobject classifier of a new ambient
+topos, $A_n$ is not asserted to be a dominance, and $\Delta_n$ does not
+classify ordinary complementary subobjects unless the complement and
+join conditions descend to $\Omega$. At level $1$ that descent is
+proved in \cref{prop:ambiguous-base}. Likewise the letters
+$\Sigma^0_n,\Pi^0_n,\Delta^0_n$ are used only in the numerical support
+comparison of \cref{thm:arithmetical-calibration}, where their meaning
+and equivalence have been established.
+
+\begin{thebibliography}{99}
+
+\bibitem{sheridan}
+Conor Sheridan.
+\newblock \emph{Effective Domains, Oracles, and Forcing in the Effective Topos}.
+\newblock Manuscript, November 2026. Cited as Paper~I.
+
+\bibitem{hyland}
+J. M. E. Hyland.
+\newblock The effective topos.
+\newblock In A. S. Troelstra and D. van Dalen, editors,
+\emph{The L. E. J. Brouwer Centenary Symposium}, Studies in Logic and the
+Foundations of Mathematics 110, pages 165--216. North-Holland, 1982.
+
+\bibitem{vanoosten}
+Jaap van Oosten.
+\newblock \emph{Realizability: An Introduction to its Categorical Side}.
+\newblock Studies in Logic and the Foundations of Mathematics 152.
+Elsevier, 2008.
+
+\bibitem{hylandvariations}
+J. M. E. Hyland.
+\newblock Variations on realizability: realizing the propositional axiom of choice.
+\newblock Author manuscript dated August 28, 2003.
+\newblock \url{https://www.dpmms.cam.ac.uk/~jmeh1/Research/Publications/2002/vor02.pdf}.
+
+\bibitem{paulydebrecht}
+Arno Pauly and Matthew de Brecht.
+\newblock Towards synthetic descriptive set theory: an instantiation with represented spaces.
+\newblock arXiv:1307.1850, version 2, 2014.
+\newblock \url{https://arxiv.org/abs/1307.1850}.
+
+\bibitem{debrechtjump}
+Matthew de Brecht.
+\newblock Levels of discontinuity, limit-computability, and jump operators.
+\newblock arXiv:1312.0697, 2013.
+\newblock \url{https://arxiv.org/abs/1312.0697}.
+
+\bibitem{chen}
+Ruiyuan Chen.
+\newblock Borel and analytic sets in locales.
+\newblock arXiv:2011.00437, 2020.
+\newblock \url{https://arxiv.org/abs/2011.00437}.
+
+\bibitem{kihara}
+Takayuki Kihara.
+\newblock Rethinking the notion of oracle: a prequel to Lawvere--Tierney topologies for computability theorists.
+\newblock arXiv:2202.00188, version 4, 2024.
+\newblock \url{https://arxiv.org/abs/2202.00188}.
+
+\end{thebibliography}
+\end{document}
+
+
